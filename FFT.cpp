@@ -57,12 +57,15 @@ namespace leart
 		for (int i = 0; i < n; i++)
 			cur[i] = vec[rev[i]];
 
-		for (int len = 1; len < n; len <<= 1) {
+		for (int len = 1; len < n; len <<= 1)
+		{
 			vocmplx ncur(n);
 			int rstep = roots.size() / (len * 2);
-			for (int pdest = 0; pdest < n;) {
+			for (int pdest = 0; pdest < n;)
+			{
 				int p1 = pdest;
-				for (int i = 0; i < len; i++) {
+				for (int i = 0; i < len; i++)
+				{
 					std::complex<cmplxtype> val = roots[i * rstep] * cur[p1 + len];
 					ncur[pdest] = cur[p1] + val;
 					ncur[pdest + len] = cur[p1] - val;

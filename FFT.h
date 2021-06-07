@@ -35,7 +35,6 @@ namespace leart
 		FFT();
 		FFT(const FFT&) = delete;
 		static vocmplx roots;
-		static int rootsUsage;
 	public:
 		static vocmplx FFT_(const vocmplx& vec);
 		static vocmplx RFFT_(const vocmplx& vec);
