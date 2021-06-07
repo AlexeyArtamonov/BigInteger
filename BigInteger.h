@@ -20,7 +20,6 @@ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
-
 */
 
 #pragma once
@@ -43,10 +42,9 @@ namespace leart
         BigInteger();
         BigInteger(const long long integer_representation_of_number);
         BigInteger(const std::string& string_representation_of_number);
-        //BigInteger(const char* string_representation_of_number);
-        BigInteger(const BigInteger& object_to_copy); // Copy constructor
+        BigInteger(const BigInteger& object_to_copy);
 
-    public:
+    private:
         type& operator[] (const int index);
         type operator[] (const int index) const;
 
@@ -108,18 +106,8 @@ namespace leart
         void SetArray(std::string& string_representation_of_number);
         void SetArray(const long long integer_representation_of_number);
         void SetArray(const std::string& string_representation_of_number);
-        /// <summary>
-        /// ”станавливает знак удал¤¤ его из исходной строки
-        /// </summary>
-        /// <param name="string_representation_of_number"></param>
         void SetSign(std::string& string_representation_of_number);
 
-        /// <summary>
-        /// ќпредел¤ет наибольше из двух чисел
-        /// </summary>
-        /// <param name="first_number">ѕервое число</param>
-        /// <param name="second_number">¬торое число</param>
-        /// <returns>¬озваращает 1 если первое число больше, 0 если второе число больше, 2 если числа равны</returns>
         static int  is_greater(const BigInteger& first_number, const  BigInteger& second_number);
         static int  is_greater(const BigInteger& first_number, const  std::string& second_number);
 
@@ -127,7 +115,6 @@ namespace leart
         static BigInteger Add(const BigInteger& first_number, const BigInteger& second_number);
         static BigInteger Mul(const BigInteger& first_number, const BigInteger& second_number);
 
-        //TODO:Implement short Sub, Add, Mul
         static BigInteger Sub(const BigInteger& first_number, const type second_number); // Only when second number < base
         static BigInteger Add(const BigInteger& first_number, const type second_number); // Only when second number < base
         static BigInteger Mul(const BigInteger& first_number, const type second_number); // Only when second number < base

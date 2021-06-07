@@ -20,7 +20,6 @@ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
-
 */
 
 #include "FFT.h"
@@ -35,26 +34,24 @@ namespace leart
 
 		while ((1 << k) < n) k++;
 
-		std::vector<int> rev(n); //Массив для хранения перевернутых индексов
+		std::vector<int> rev(n);
 		rev[0] = 0;
 		int high1 = -1;
 
-		//Переворот битов
 		for (int i = 1; i < n; i++) 
 		{
-			if ((i & (i - 1)) == 0) // Проверка на степень двойки. Если i ей является, то i-1 будет состоять из кучи единиц.
+			if ((i & (i - 1)) == 0)
 				high1++;
-			rev[i] = rev[i ^ (1 << high1)]; // Переворачиваем остаток
-			rev[i] |= (1 << (k - high1 - 1)); // Добавляем старший бит
+			rev[i] = rev[i ^ (1 << high1)];
+			rev[i] |= (1 << (k - high1 - 1));
 		}
 
-		//Предвычисление корней
-			vocmplx	roots(n);
-			for (int i = 0; i < n; i++)
-			{
-				double temp = 2 * 3.14159265358979323846 * i / n;
-				roots[i] = std::complex <cmplxtype>(std::cos(temp), std::sin(temp));
-			}
+		vocmplx	roots(n);
+		for (int i = 0; i < n; i++)
+		{
+			double temp = 2 * 3.14159265358979323846 * i / n;
+			roots[i] = std::complex <cmplxtype>(std::cos(temp), std::sin(temp));
+		}
 
 		vocmplx cur(n);
 		for (int i = 0; i < n; i++)
