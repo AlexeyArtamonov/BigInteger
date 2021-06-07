@@ -23,7 +23,6 @@ SOFTWARE.
 
 */
 
-#include <string>
 #include "BigInteger.h"
 
 namespace leart
@@ -237,7 +236,6 @@ namespace leart
 		if (second_number < 0)
 			return operator+(first_number, -second_number);
 
-		//TODO: Redo after sleep
 		BigInteger result;
 		if (first_number.size() > 1)
 		{
@@ -264,8 +262,12 @@ namespace leart
 		}
 		return result;
 	}
+	//TODO: Redo all two functions above
 	BigInteger operator* (const BigInteger& first_number, const long long second_number)
 	{
+		if (second_number >= BigInteger::base)
+			return operator*(first_number, (BigInteger)second_number);
+
 		BigInteger result = BigInteger::Mul(first_number,second_number);
 		result.sign = !(first_number.sign ^ (second_number >= 0? 1 : 0));
 		return result;
@@ -353,9 +355,9 @@ namespace leart
 		if (sign == 0)
 			str += "-";
 
-		// Добавить последний элемент без дополнения нулями (число записанно в массив в обратном порядке)
+		// Adding first number without leading zeros (number stored in array in reverse order)
 		str += std::to_string(arr[arr.size() - 1]);
-		// Добавить последующие элементы дополнив каждый нулями
+		// Adding other numbers complementing up to "digits_per_element_of_array" digits
 		for (int i = arr.size() - 2; i >= 0; i--)
 		{
 			std::string temp = std::to_string(arr[i]);
@@ -372,9 +374,9 @@ namespace leart
 		if (sign == 0)
 			str += L"-";
 
-		// Добавить последний элемент без дополнения нулями (число записанно в массив в обратном порядке)
+		// Adding first number without leading zeros (number stored in array in reverse order)
 		str += std::to_wstring(arr[arr.size() - 1]);
-		// Добавить последующие элементы дополнив каждый нулями
+		// Adding other numbers complementing up to "digits_per_element_of_array" digits
 		for (int i = arr.size() - 2; i >= 0; i--)
 		{
 			std::wstring temp = std::to_wstring(arr[i]);
@@ -392,10 +394,10 @@ namespace leart
 		SetSign(str);
 
 		int _size = str.length() / digit_per_element_of_array
-			+ (str.length() % digit_per_element_of_array == 0 ? 0 : 1); // Округление вверх
+			+ (str.length() % digit_per_element_of_array == 0 ? 0 : 1); // Round up
 		arr = std::vector<type>(_size);
 
-		//Выборка по digit_per_element_of_array символов
+		//Extracting digit_per_element_of_array symbols for each element of array
 		for (int i = 0, j = str.length(); i < size(); i++, j -= digit_per_element_of_array)
 		{
 			std::string temp = "";
@@ -445,8 +447,8 @@ namespace leart
 	/// <summary>
 	/// 
 	/// </summary>
-	/// <param name="a"></param>
-	/// <param name="b"></param>
+	/// <param name="first_number"></param>
+	/// <param name="second_number"></param>
 	/// <returns>Returns 1 if first number is greater, 0 if second number, and 2 if they are equal</returns>
 	int  BigInteger::is_greater(const BigInteger& first_number, const  BigInteger& second_number)
 	{
@@ -525,7 +527,7 @@ namespace leart
 			}
 		}
 		
-		//Удаление ведущих нулей
+		//Deleting leading zeros
 		while (a.arr[a.size() - 1] == 0 && a.size() > 1)
 		{
 			
