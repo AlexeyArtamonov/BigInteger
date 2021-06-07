@@ -40,10 +40,6 @@ namespace leart
 	{
 		SetArray(s_number);
 	}
-	/*BigInteger::BigInteger(const char* s_number)
-	{
-		SetArray(s_number);
-	}*/
 	BigInteger::BigInteger(const BigInteger& copy)
 	{
 		sign = copy.sign;
@@ -60,7 +56,7 @@ namespace leart
 	}
 
 
-	//Public functions------------------------------------------------------------------------------
+	#pragma region Public functions
 	std::istream& operator>>(std::istream& input, BigInteger& number)
 	{
 		std::string temp;
@@ -388,7 +384,7 @@ namespace leart
 		}
 		return str;
 	}
-	//End of public functions-------------------------------------------------------------------------
+#pragma endregion
 
 
 	void BigInteger::SetArray(std::string& str)
@@ -425,6 +421,10 @@ namespace leart
 		SetArray(temp);
 	}
 
+	/// <summary>
+	/// Set sign and delete sign from string
+	/// </summary>
+	/// <param name="str"></param>
 	void BigInteger::SetSign(std::string& str)
 	{
 		if (str[0] == '+')
@@ -443,56 +443,56 @@ namespace leart
 	}
 
 	/// <summary>
-	/// Определяет какое из двух чисел больше по абсолютной величине
+	/// 
 	/// </summary>
 	/// <param name="a"></param>
 	/// <param name="b"></param>
-	/// <returns>2 Если числа равны, 1 если первое больше, 0 если второе больше</returns>
-	int  BigInteger::is_greater(const BigInteger& a, const  BigInteger& b)
+	/// <returns>Returns 1 if first number is greater, 0 if second number, and 2 if they are equal</returns>
+	int  BigInteger::is_greater(const BigInteger& first_number, const  BigInteger& second_number)
 	{
-		if (a.size() > b.size())
+		if (first_number.size() > second_number.size())
 			return 1;
 		else
 		{
-			if (b.size() > a.size())
+			if (second_number.size() > first_number.size())
 				return 0;
 			else
 			{
-				for (int i = a.size() -1; i >= 0; i--)
-					if (a[i] > b[i])
+				for (int i = first_number.size() -1; i >= 0; i--)
+					if (first_number[i] > second_number[i])
 						return 1;
 					else
 					{
-						if (a[i] < b[i])
+						if (first_number[i] < second_number[i])
 							return 0;
 					}
 				return 2;
 			}
 		}
 	}
-	int  BigInteger::is_greater(const BigInteger& a, const  std::string& b)
+	int  BigInteger::is_greater(const BigInteger& first_number, const  std::string& second_number)
 	{
-		if (a.size() > b.size())
+		if (first_number.size() > second_number.size())
 			return 1;
 		else
 		{
-			if (b.size() > a.size())
+			if (second_number.size() > first_number.size())
 				return 0;
 			else
 			{
-				for (int i = a.size() - 1; i >= 0; i--)
-					if (a[i] > b[i])
+				for (int i = first_number.size() - 1; i >= 0; i--)
+					if (first_number[i] > second_number[i])
 						return 1;
 					else
 					{
-						if (a[i] < b[i])
+						if (first_number[i] < second_number[i])
 							return 0;
 					}
 				return 2;
 			}
 		}
 	}
-
+	#pragma region Arithmetic operations
 	BigInteger BigInteger::Sub(const BigInteger& first_number, const BigInteger& second_number)
 	{
 		BigInteger a = first_number;
@@ -563,7 +563,7 @@ namespace leart
 	{
 		vocmplx fa(first_number.arr.begin(), first_number.arr.end()), fb(second_number.arr.begin(), second_number.arr.end());
 
-		size_t n = 1;
+		int n = 1;
 		while (n < std::max(first_number.size(), second_number.size()))  n <<= 1;
 		n <<= 1;
 
@@ -572,20 +572,17 @@ namespace leart
 		fa = FFT::FFT_(fa);
 		fb = FFT::FFT_(fb);
 
-		for (size_t i = 0; i < n; ++i)
+		for (int i = 0; i < n; i++)
 			fa[i] *= fb[i];
 
 		fa = FFT::RFFT_(fa);
 
-		//while ((type)fa[fa.size() - 1].real() == 0)
-			//fa.erase(fa.end() - 1);
-
 		std::vector<type> res (n);
-		for (size_t i = 0; i < n; ++i)
+		for (int i = 0; i < n; i++)
 			res[i] = type(fa[i].real() + 0.5);
 		
 		int carry = 0;
-		for (size_t i = 0; i < n; ++i) {
+		for (int i = 0; i < n; i++) {
 			res[i] += carry;
 			carry = res[i] / base;
 			res[i] %= base;
@@ -628,7 +625,7 @@ namespace leart
 			}
 		}
 
-		//Удаление ведущих нулей
+		//Deleting leading zeros
 		while (a.arr[a.size() - 1] == 0 && a.size() > 1)
 		{
 
@@ -666,7 +663,7 @@ namespace leart
 	{
 		BigInteger result = first_number;
 		int carry = 0;
-		for (size_t i = 0; i < result.size() || carry; ++i) {
+		for (int i = 0; i < result.size() || carry; i++) {
 			if (i == result.size())
 				result.arr.push_back(0);
 			long long cur = carry + result[i] * 1ll * second_number;
@@ -677,4 +674,5 @@ namespace leart
 			result.arr.pop_back();
 		return result;
 	}
+#pragma endregion
 }
