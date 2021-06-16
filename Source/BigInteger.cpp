@@ -67,7 +67,7 @@ namespace leart
 	{
 		return (output << number.Get_String_Representation());
 	}
-	#pragma region Arthmetic function
+	#pragma region Arthmetic functions
 	BigInteger operator+ (const BigInteger& first_number, const BigInteger& second_number)
 	{
 		BigInteger result;
@@ -276,6 +276,33 @@ namespace leart
 	{
 		return operator* (second_number, first_number);
 	}
+
+	BigInteger& BigInteger::operator++ () // Prefix Increment
+	{
+		return (*this)++;
+	}
+	BigInteger& BigInteger::operator++ (int) // Postfix Increment
+	{
+		if (sign == 0)
+			return Dec(*this);
+		else
+			return Inc(*this);
+	}
+
+	BigInteger& BigInteger::operator-- () // Prefix Decrement
+	{
+		return (*this)++;
+	}
+	BigInteger& BigInteger::operator-- (int) // Postfix Decrement
+	{
+		if (sign == 0)
+			return Inc(*this);
+		else
+		{
+			return Dec(*this);
+		}
+	}
+
 	#pragma endregion
 
 	#pragma region Comparison functions
@@ -316,6 +343,8 @@ namespace leart
 			else
 				return false;
 		}
+		default:
+			return false; 
 		}
 	
 	}
@@ -348,6 +377,8 @@ namespace leart
 			else
 				return false;
 		}
+		default:
+			return false;
 		}
 	}
 	bool operator>= (const BigInteger& first_number, const BigInteger& second_number)
@@ -513,6 +544,12 @@ namespace leart
 			}
 		}
 	}
+	/// <summary>
+	/// 
+	/// </summary>
+	/// <param name="first_number"></param>
+	/// <param name="second_number"></param>
+	/// <returns>Returns 1 if first number is greater, 0 if second number, and 2 if they are equal</returns>
 	int  BigInteger::is_greater(const BigInteger& first_number, const  std::string& second_number)
 	{
 		if (first_number.size() > second_number.size())
@@ -656,7 +693,7 @@ namespace leart
 		}
 		if (carry == 1)
 		{
-			for (int i  = 1; i < a.size(); i++)
+			for (int i = 1; i < a.size(); i++)
 			{
 				if (a[i] == 0)
 					a[i] = base - 1;
@@ -716,6 +753,74 @@ namespace leart
 		while (result.size() > 1 && result.arr.back() == 0)
 			result.arr.pop_back();
 		return result;
+	}
+
+	BigInteger& BigInteger::Inc(BigInteger& number)
+	{
+		int carry = 0;
+		for (int i = 0; i < number.size(); i++)
+		{
+			if (i < 1)
+				number.arr[i] = number.arr[i] + 1 + carry;
+			else
+				number.arr[i] = number.arr[i] + carry;
+			if (number.arr[i] > (base - 1))
+			{
+				carry = 1;
+				number.arr[i] %= base;
+			}
+			else
+				carry = 0;
+		}
+
+		if (carry == 1)
+		{
+			number.arr[size() - 1] %= base;
+			number.arr.push_back(1);
+		}
+		return number;
+	}
+	BigInteger& BigInteger::Dec(BigInteger& number)
+	{
+		if (number[0] == 0 && number.size() == 1)
+		{
+			number[0] = 1;
+			number.sign = 0;
+			return number;
+		}
+		int carry = 0;
+		if (number.arr[0] >= 1)
+		{
+			number.arr[0] -= 1;
+			carry = 0;
+		}
+		else
+		{
+			number.arr[0] = (number.arr[0] + base) - 1;
+			carry = 1;
+		}
+		if (carry == 1)
+		{
+			for (int i = 1; i < number.size(); i++)
+			{
+				if (number.arr[i] == 0)
+					number.arr[i] = base - 1;
+				else
+				{
+					number.arr[i]--;
+					break;
+				}
+			}
+		}
+
+		//Deleting leading zeros
+		while (number.arr[number.size() - 1] == 0 && number.size() > 1)
+		{
+			number.arr.erase(number.arr.end() - 1);
+		}
+		if (number.arr[0] == 0 && number.sign == 0 && number.size() == 1)
+			number.sign = 1;
+		return number;
 	}
 #pragma endregion
 }
