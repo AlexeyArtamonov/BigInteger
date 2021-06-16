@@ -67,7 +67,7 @@ namespace leart
 	{
 		return (output << number.Get_String_Representation());
 	}
-#pragma region Arthmetic function
+	#pragma region Arthmetic function
 	BigInteger operator+ (const BigInteger& first_number, const BigInteger& second_number)
 	{
 		BigInteger result;
@@ -276,8 +276,9 @@ namespace leart
 	{
 		return operator* (second_number, first_number);
 	}
-#pragma endregion
-#pragma region Comparison functions
+	#pragma endregion
+
+	#pragma region Comparison functions
 	bool operator== (const BigInteger& first_number, const BigInteger& second_number)
 	{
 		return (BigInteger::is_greater(first_number, second_number) == 2 && first_number.Sign() == second_number.Sign());
@@ -288,47 +289,65 @@ namespace leart
 	}
 	bool operator> (const BigInteger& first_number, const BigInteger& second_number)
 	{
-		if (BigInteger::is_greater(first_number, second_number) == 1)
+		const int isGreaterCall = BigInteger::is_greater(first_number, second_number);
+		
+		switch (isGreaterCall)
 		{
-			if (first_number.Sign() == 1)
-				return true;
-			else
-			{
-				if (first_number.Sign() == 0 && second_number.Sign() == 1)
-					return false;
-				else
-					return true;
-			}
-		}
-		else
+			case 0:
 		{
-			if (second_number.Sign() == 0)
+			if ((first_number.Sign() == 1 && second_number.Sign() == 0)
+				|| (first_number.Sign() == 0 && second_number.Sign() == 0))
 				return true;
 			else
 				return false;
 		}
-
+		case 1:
+		{
+			if ((first_number.Sign() == 1 && second_number.Sign() == 1)
+				|| (first_number.Sign() == 1 && second_number.Sign() == 0))
+				return true;
+			else
+				return false;
+		}
+		case 2:
+		{
+			if (first_number.Sign() == 1 && second_number.Sign() == 0)
+				return true;
+			else
+				return false;
+		}
+		}
+	
 	}
 	bool operator< (const BigInteger& first_number, const BigInteger& second_number)
 	{
-		if (BigInteger::is_greater(first_number, second_number) == 0)
+		const int isGreaterCall = BigInteger::is_greater(first_number, second_number);
+		
+		switch (isGreaterCall)
 		{
-			if (first_number.Sign() == 0)
-				return true;
-			else
-			{
-				if (first_number.Sign() == 1 && second_number.Sign() == 0)
-					return false;
-				else
-					return true;
-			}
-		}
-		else
+		case 0:
 		{
-			if (second_number.Sign() == 1)
+			if ((first_number.Sign() == 0 && second_number.Sign() == 1)
+				|| (first_number.Sign() == 1 && second_number.Sign() == 1))
 				return true;
 			else
 				return false;
+		}
+		case 1:
+		{
+			if ((first_number.Sign() == 0 && second_number.Sign() == 0)
+				|| (first_number.Sign() == 0 && second_number.Sign() == 1))
+				return true;
+			else
+				return false;
+		}
+		case 2:
+		{
+			if (first_number.Sign() == 0 && second_number.Sign() == 1)
+				return true;
+			else
+				return false;
+		}
 		}
 	}
 	bool operator>= (const BigInteger& first_number, const BigInteger& second_number)
@@ -339,7 +358,7 @@ namespace leart
 	{
 		return (first_number < second_number || first_number == second_number);
 	}
-#pragma endregion 
+	#pragma endregion 
 
 	BigInteger& BigInteger::operator= (const BigInteger& number)
 	{
