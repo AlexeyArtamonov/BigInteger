@@ -55,7 +55,7 @@ namespace leart
 	}
 
 
-	#pragma region Public functions
+	
 	std::istream& operator>>(std::istream& input, BigInteger& number)
 	{
 		std::string temp;
@@ -67,7 +67,7 @@ namespace leart
 	{
 		return (output << number.Get_String_Representation());
 	}
-
+	#pragma region Arthmetic function
 	BigInteger operator+ (const BigInteger& first_number, const BigInteger& second_number)
 	{
 		BigInteger result;
@@ -272,50 +272,93 @@ namespace leart
 		result.sign = !(first_number.sign ^ (second_number >= 0? 1 : 0));
 		return result;
 	}
-
 	BigInteger operator* (const long long first_number, const BigInteger& second_number)
 	{
 		return operator* (second_number, first_number);
 	}
+	#pragma endregion
 
+	#pragma region Comparison functions
 	bool operator== (const BigInteger& first_number, const BigInteger& second_number)
 	{
-		return BigInteger::is_greater(first_number, second_number) == 2;
+		return (BigInteger::is_greater(first_number, second_number) == 2 && first_number.Sign() == second_number.Sign());
 	}
 	bool operator!= (const BigInteger& first_number, const BigInteger& second_number)
 	{
-		return !(BigInteger::is_greater(first_number, second_number) == 2);
+		return !(BigInteger::is_greater(first_number, second_number) == 2 && first_number.Sign() == second_number.Sign());
 	}
 	bool operator> (const BigInteger& first_number, const BigInteger& second_number)
 	{
-		if (BigInteger::is_greater(first_number, second_number) == 1)
-			return true;
-		else
-			return false;
+		const int isGreaterCall = BigInteger::is_greater(first_number, second_number);
+		
+		switch (isGreaterCall)
+		{
+			case 0:
+		{
+			if ((first_number.Sign() == 1 && second_number.Sign() == 0)
+				|| (first_number.Sign() == 0 && second_number.Sign() == 0))
+				return true;
+			else
+				return false;
+		}
+		case 1:
+		{
+			if ((first_number.Sign() == 1 && second_number.Sign() == 1)
+				|| (first_number.Sign() == 1 && second_number.Sign() == 0))
+				return true;
+			else
+				return false;
+		}
+		case 2:
+		{
+			if (first_number.Sign() == 1 && second_number.Sign() == 0)
+				return true;
+			else
+				return false;
+		}
+		}
+	
 	}
 	bool operator< (const BigInteger& first_number, const BigInteger& second_number)
 	{
-		if (BigInteger::is_greater(first_number, second_number) == 0)
-			return true;
-		else
-			return false;
+		const int isGreaterCall = BigInteger::is_greater(first_number, second_number);
+		
+		switch (isGreaterCall)
+		{
+		case 0:
+		{
+			if ((first_number.Sign() == 0 && second_number.Sign() == 1)
+				|| (first_number.Sign() == 1 && second_number.Sign() == 1))
+				return true;
+			else
+				return false;
+		}
+		case 1:
+		{
+			if ((first_number.Sign() == 0 && second_number.Sign() == 0)
+				|| (first_number.Sign() == 0 && second_number.Sign() == 1))
+				return true;
+			else
+				return false;
+		}
+		case 2:
+		{
+			if (first_number.Sign() == 0 && second_number.Sign() == 1)
+				return true;
+			else
+				return false;
+		}
+		}
 	}
 	bool operator>= (const BigInteger& first_number, const BigInteger& second_number)
 	{
-		if (BigInteger::is_greater(first_number, second_number) == 1
-			|| BigInteger::is_greater(first_number, second_number) == 2)
-			return true;
-		else
-			return false;
+		return (first_number > second_number || first_number == second_number);
 	}
 	bool operator<= (const BigInteger& first_number, const BigInteger& second_number)
 	{
-		if (BigInteger::is_greater(first_number, second_number) == 0
-			|| BigInteger::is_greater(first_number, second_number) == 2)
-			return true;
-		else
-			return false;
+		return (first_number < second_number || first_number == second_number);
 	}
+	#pragma endregion 
 
 	BigInteger& BigInteger::operator= (const BigInteger& number)
 	{
@@ -386,8 +429,6 @@ namespace leart
 		}
 		return str;
 	}
-#pragma endregion
-
 
 	void BigInteger::SetArray(std::string& str)
 	{
