@@ -118,6 +118,9 @@ namespace leart
         static BigInteger Add(const BigInteger& first_number, const type second_number); // Only when second number < base
         static BigInteger Mul(const BigInteger& first_number, const type second_number); // Only when second number < base
 
+        BigInteger& Inc(BigInteger& number);
+        BigInteger& Dec(BigInteger& number);
+
     private:
         std::vector<type> arr;
         bool sign = 1;
