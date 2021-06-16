@@ -67,6 +67,7 @@ namespace leart
 	{
 		return (output << number.Get_String_Representation());
 	}
+
 	#pragma region Arthmetic functions
 	BigInteger operator+ (const BigInteger& first_number, const BigInteger& second_number)
 	{
@@ -277,11 +278,13 @@ namespace leart
 		return operator* (second_number, first_number);
 	}
 
-	BigInteger& BigInteger::operator++ () // Prefix Increment
+	// Prefix Increment
+	BigInteger& BigInteger::operator++ ()
 	{
 		return (*this)++;
 	}
-	BigInteger& BigInteger::operator++ (int) // Postfix Increment
+	// Postfix Increment
+	BigInteger& BigInteger::operator++ (int) 
 	{
 		if (sign == 0)
 			return Dec(*this);
@@ -289,11 +292,13 @@ namespace leart
 			return Inc(*this);
 	}
 
-	BigInteger& BigInteger::operator-- () // Prefix Decrement
+	// Prefix Decrement
+	BigInteger& BigInteger::operator-- ()
 	{
 		return (*this)++;
 	}
-	BigInteger& BigInteger::operator-- (int) // Postfix Decrement
+	// Postfix Decrement
+	BigInteger& BigInteger::operator-- (int)
 	{
 		if (sign == 0)
 			return Inc(*this);
@@ -302,7 +307,6 @@ namespace leart
 			return Dec(*this);
 		}
 	}
-
 	#pragma endregion
 
 	#pragma region Comparison functions
@@ -572,6 +576,7 @@ namespace leart
 			}
 		}
 	}
+
 	#pragma region Arithmetic operations
 	BigInteger BigInteger::Sub(const BigInteger& first_number, const BigInteger& second_number)
 	{
@@ -822,5 +827,5 @@ namespace leart
 			number.sign = 1;
 		return number;
 	}
-#pragma endregion
+	#pragma endregion
 }
