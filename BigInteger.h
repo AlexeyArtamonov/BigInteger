@@ -77,7 +77,6 @@ namespace leart
 
         //TODO:Don't forget about these methods up here
         
-        //TODO:Redo all comparsion operators (Now we have signed BigInteger)
     public:
         friend bool operator== (const BigInteger& first_number, const BigInteger& second_number);
         friend bool operator!= (const BigInteger& first_number, const BigInteger& second_number);
