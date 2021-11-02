@@ -2,7 +2,7 @@
 <Project>
   <ProjectOutputs>
     <ProjectOutput>
-      <FullPath>A:\Hub\BigInt\Debug\BigInt.exe</FullPath>
+      <FullPath>A:\Hub\BigInteger\Debug\BigInt.exe</FullPath>
     </ProjectOutput>
   </ProjectOutputs>
   <ContentFiles />
