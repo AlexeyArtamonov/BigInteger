@@ -44,13 +44,14 @@ namespace leart
     {
         using type = unsigned long long; // Type of elements of array
 
-        static const type base = 1'000'000'000; // Max value of each element of array
-        static constexpr short digit_per_element_of_array = leart::log10(base); // log10 (base)
+        static const type base = 1'000'000'000; // Max value of each element of array 
+        static constexpr short digit_per_element_of_array = leart::log10(base);
 
     public:
         BigInteger();
         BigInteger(const long long integer_representation_of_number);
         BigInteger(const std::string& string_representation_of_number);
+        BigInteger(const char* string_representation_of_number);
         BigInteger(const BigInteger& object_to_copy);
 
     private:

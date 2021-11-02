@@ -39,6 +39,10 @@ namespace leart
 	{
 		SetArray(s_number);
 	}
+	BigInteger::BigInteger(const char* s_number)
+	{
+		SetArray(s_number);
+	}
 	BigInteger::BigInteger(const BigInteger& copy)
 	{
 		sign = copy.sign;
