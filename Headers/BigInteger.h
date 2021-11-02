@@ -122,7 +122,7 @@ namespace leart
     private:
         int size() const;
 
-    public:
+    private:
         void SetArray(std::string& string_representation_of_number);
         void SetArray(const long long integer_representation_of_number);
         void SetArray(const std::string& string_representation_of_number);
