@@ -102,7 +102,7 @@ namespace leart
     
     public:
         BigInteger& operator= (const BigInteger& object_to_assign);
-        BigInteger operator-(); // Sign changer
+        BigInteger& operator-(); // Sign changer
 
     public:
         explicit operator long long() const;

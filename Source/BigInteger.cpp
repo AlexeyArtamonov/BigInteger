@@ -442,7 +442,7 @@ namespace leart
 		}
 		return *this;
 	}
-	BigInteger BigInteger::operator-()
+	BigInteger& BigInteger::operator-()
 	{
 		if (*this != 0)
 			sign = !sign;
