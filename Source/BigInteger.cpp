@@ -362,7 +362,7 @@ namespace leart
 		
 		switch (isGreaterCall)
 		{
-			case 0:
+		case 0:
 		{
 			if ((first_number.Sign() == 1 && second_number.Sign() == 0)
 				|| (first_number.Sign() == 0 && second_number.Sign() == 0))
@@ -537,10 +537,7 @@ namespace leart
 		SetArray(temp);
 	}
 
-	/// <summary>
-	/// Set sign and delete sign from string
-	/// </summary>
-	/// <param name="str"></param>
+	// Set sign and delete sign from string
 	void BigInteger::SetSign(std::string& str)
 	{
 		if (str[0] == '+')
@@ -557,7 +554,7 @@ namespace leart
 			}
 		}
 	}
-
+	//TODO: REDO
 	/// <summary>
 	/// 
 	/// </summary>
@@ -586,35 +583,8 @@ namespace leart
 			}
 		}
 	}
-	/// <summary>
-	/// 
-	/// </summary>
-	/// <param name="first_number"></param>
-	/// <param name="second_number"></param>
-	/// <returns>Returns 1 if first number is greater, 0 if second number, and 2 if they are equal</returns>
-	int  BigInteger::is_greater(const BigInteger& first_number, const  std::string& second_number)
-	{
-		if (first_number.size() > second_number.size())
-			return 1;
-		else
-		{
-			if (second_number.size() > first_number.size())
-				return 0;
-			else
-			{
-				for (int i = first_number.size() - 1; i >= 0; i--)
-					if (first_number[i] > second_number[i])
-						return 1;
-					else
-					{
-						if (first_number[i] < second_number[i])
-							return 0;
-					}
-				return 2;
-			}
-		}
-	}
 
+	//TODO: REDO with opmization
 	#pragma region Arithmetic operations
 	BigInteger BigInteger::Sub(const BigInteger& first_number, const BigInteger& second_number)
 	{

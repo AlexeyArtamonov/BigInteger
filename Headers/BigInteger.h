@@ -104,6 +104,13 @@ namespace leart
         friend bool operator<= (const BigInteger& first_number, const BigInteger& second_number);
         friend bool operator> (const BigInteger& first_number, const BigInteger& second_number);
         friend bool operator>= (const BigInteger& first_number, const BigInteger& second_number);
+        //TODO: Implement
+        /*friend bool operator== (const BigInteger& first_number, const long long);
+        friend bool operator!= (const BigInteger& first_number, const long long);
+        friend bool operator< (const BigInteger& first_number,  const long long);
+        friend bool operator<= (const BigInteger& first_number, const long long);
+        friend bool operator> (const BigInteger& first_number,  const long long);
+        friend bool operator>= (const BigInteger& first_number, const long long);*/
     
     public:
         BigInteger& operator= (const BigInteger& object_to_assign);
@@ -129,8 +136,6 @@ namespace leart
         void SetSign(std::string& string_representation_of_number);
 
         static int  is_greater(const BigInteger& first_number, const  BigInteger& second_number);
-        static int  is_greater(const BigInteger& first_number, const  std::string& second_number);
-
         static BigInteger Sub(const BigInteger& first_number, const BigInteger& second_number);
         static BigInteger Add(const BigInteger& first_number, const BigInteger& second_number);
         static BigInteger Mul(const BigInteger& first_number, const BigInteger& second_number);
