@@ -89,6 +89,9 @@ namespace leart
         const BigInteger& operator-= (const BigInteger& number);
         const BigInteger& operator-= (const long long number);
 
+        const BigInteger& operator*= (const BigInteger& number);
+        const BigInteger& operator*= (const long long number);
+
         //TODO:Don't forget about these methods up here
         
     public:

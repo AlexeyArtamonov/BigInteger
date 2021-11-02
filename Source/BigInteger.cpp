@@ -334,6 +334,17 @@ namespace leart
 		*this = *this - number;
 		return *this;
 	}
+
+	const BigInteger& BigInteger::operator*= (const BigInteger& number)
+	{
+		*this = *this * number;
+		return *this;
+	}
+	const BigInteger& BigInteger::operator*= (const long long number)
+	{
+		*this = *this * number;
+		return *this;
+	}
 	#pragma endregion
 
 	#pragma region Comparison functions
