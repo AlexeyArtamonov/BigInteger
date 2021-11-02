@@ -27,16 +27,25 @@ SOFTWARE.
 #include <iostream>
 #include <vector>
 #include <string>
+#include <type_traits>
 #include "../Headers/FFT.h"
 
 namespace leart
 {
+    template <typename Type, std::enable_if_t<std::is_integral<Type>::value, bool> = true>
+    inline constexpr unsigned short log10(Type number)
+    {
+        unsigned short result = 1;
+        while ((number /= 10) != 0)
+            result++;
+        return result;
+    }
     class BigInteger
     {
         using type = unsigned long long; // Type of elements of array
 
         static const type base = 1'000'000'000; // Max value of each element of array
-        static const short digit_per_element_of_array = 9; // log10 (base)
+        static constexpr short digit_per_element_of_array = leart::log10(base); // log10 (base)
 
     public:
         BigInteger();
