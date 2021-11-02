@@ -79,11 +79,11 @@ namespace leart
         BigInteger& operator-- (); // Prefix Decrement
         BigInteger& operator-- (int); // Postfix Decrement
 
-        void operator+= (const BigInteger& number);
-        void operator+= (const long long number);
+        const BigInteger& operator+= (const BigInteger& number);
+        const BigInteger& operator+= (const long long number);
 
-        void operator-= (const BigInteger& number);
-        void operator-= (const long long number);
+        const BigInteger& operator-= (const BigInteger& number);
+        const BigInteger& operator-= (const long long number);
 
         //TODO:Don't forget about these methods up here
         
