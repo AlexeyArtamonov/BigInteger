@@ -1,0 +1,2 @@
+A:\Hub\BigInt\Debug\BigInt.exe
+A:\Hub\BigInt\Debug\BigInt.pdb
