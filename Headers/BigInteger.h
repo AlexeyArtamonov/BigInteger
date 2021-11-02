@@ -32,13 +32,16 @@ SOFTWARE.
 
 namespace leart
 {
-    template <typename Type, std::enable_if_t<std::is_integral<Type>::value, bool> = true>
+    template <typename Type, std::enable_if_t<std::is_unsigned<Type>::value, bool> = true,
+                             std::enable_if_t<std::is_integral<Type>::value, bool> = true>
     inline constexpr unsigned short log10(Type number)
     {
-        unsigned short result = 1;
-        while ((number /= 10) != 0)
-            result++;
-        return result;
+        unsigned short log = 0;
+        for (unsigned long long i = 10; ; log++, i *= 10)
+        {
+            if (number < i)
+                return log;
+        }
     }
     class BigInteger
     {
@@ -105,7 +108,7 @@ namespace leart
         BigInteger& operator-(); // Sign changer
 
     public:
-        explicit operator long long() const;
+        explicit operator long long() const; // This method doesn't check if number can't fit in long long
         explicit operator std::string() const;
 
     public:
