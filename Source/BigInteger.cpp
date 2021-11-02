@@ -31,10 +31,6 @@ namespace leart
 	{
 		SetArray("0");
 	}
-	BigInteger::BigInteger(const long long number)
-	{
-		SetArray(number);
-	}
 	BigInteger::BigInteger(const std::string& s_number)
 	{
 		SetArray(s_number);
@@ -282,34 +278,38 @@ namespace leart
 		return operator* (second_number, first_number);
 	}
 
+	//TODO: Add tests
 	// Prefix Increment
 	BigInteger& BigInteger::operator++ ()
-	{
-		return (*this)++;
-	}
-	// Postfix Increment
-	BigInteger& BigInteger::operator++ (int) 
 	{
 		if (sign == 0)
 			return Dec(*this);
 		else
 			return Inc(*this);
+	}
+	// Postfix Increment
+	BigInteger BigInteger::operator++ (int) 
+	{
+		BigInteger old = *this;
+		--(*this);
+		return old;
 	}
 
 	// Prefix Decrement
 	BigInteger& BigInteger::operator-- ()
 	{
-		return (*this)++;
-	}
-	// Postfix Decrement
-	BigInteger& BigInteger::operator-- (int)
-	{
 		if (sign == 0)
 			return Inc(*this);
 		else
-		{
 			return Dec(*this);
-		}
+	}
+	// Postfix Decrement
+	BigInteger BigInteger::operator-- (int)
+	{
+		BigInteger old = *this;
+		--(*this);
+		return old;
+		
 	}
 
 	//TODO: All four below need tests

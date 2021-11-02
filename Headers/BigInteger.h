@@ -49,9 +49,13 @@ namespace leart
 
     public:
         BigInteger();
-        BigInteger(const long long integer_representation_of_number);
+        template<typename Type, std::enable_if_t<std::is_integral<Type>::value, bool> = true>
+        inline BigInteger(const Type integer_representation_of_number)
+        {
+            SetArray(integer_representation_of_number);
+        }
         BigInteger(const std::string& string_representation_of_number);
-        BigInteger(const char* string_representation_of_number);
+        BigInteger(const char* const string_representation_of_number);
         BigInteger(const BigInteger& object_to_copy);
 
     private:
@@ -74,10 +78,10 @@ namespace leart
         friend BigInteger operator* (const long long first_number, const BigInteger& second_number); // Logic only
 
         BigInteger& operator++ (); // Prefix Increment
-        BigInteger& operator++ (int); // Postfix Increment
+        BigInteger operator++ (int); // Postfix Increment
 
         BigInteger& operator-- (); // Prefix Decrement
-        BigInteger& operator-- (int); // Postfix Decrement
+        BigInteger operator-- (int); // Postfix Decrement
 
         const BigInteger& operator+= (const BigInteger& number);
         const BigInteger& operator+= (const long long number);
