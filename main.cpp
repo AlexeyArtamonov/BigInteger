@@ -5,6 +5,6 @@ int main()
 {
 	using namespace leart;
 	BigInteger a = 43;
-	BigInteger b = std::string("3243");
-	std::cout << a - b;
+	BigInteger b("f");
+	std::cout << b;
 }

@@ -57,7 +57,9 @@ namespace leart
         {
             SetArray(integer_representation_of_number);
         }
+        // Can throw std::invalid_argument if number isn't correct
         BigInteger(const std::string& string_representation_of_number);
+        // Can throw std::invalid_argument if number isn't correct
         BigInteger(const char* const string_representation_of_number);
         BigInteger(const BigInteger& object_to_copy);
 
@@ -108,6 +110,7 @@ namespace leart
         BigInteger& operator-(); // Sign changer
 
     public:
+        // Can throw std::out_of_range
         explicit operator long long() const; // This method doesn't check if number can't fit in long long
         explicit operator std::string() const;
 
