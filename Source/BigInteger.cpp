@@ -35,11 +35,11 @@ namespace leart
 	{
 		SetArray(s_number);
 	}
-	BigInteger::BigInteger(const char* s_number)
+	BigInteger::BigInteger(const char*		  s_number)
 	{
 		SetArray(s_number);
 	}
-	BigInteger::BigInteger(const BigInteger& copy)
+	BigInteger::BigInteger(const BigInteger&  copy)
 	{
 		sign = copy.sign;
 		arr = copy.arr;
@@ -356,7 +356,7 @@ namespace leart
 	{
 		return !(BigInteger::is_greater(first_number, second_number) == 2 && first_number.Sign() == second_number.Sign());
 	}
-	bool operator> (const BigInteger& first_number, const BigInteger& second_number)
+	bool operator>  (const BigInteger& first_number, const BigInteger& second_number)
 	{
 		const int isGreaterCall = BigInteger::is_greater(first_number, second_number);
 		
@@ -390,7 +390,7 @@ namespace leart
 		}
 	
 	}
-	bool operator< (const BigInteger& first_number, const BigInteger& second_number)
+	bool operator<  (const BigInteger& first_number, const BigInteger& second_number)
 	{
 		const int isGreaterCall = BigInteger::is_greater(first_number, second_number);
 		
@@ -434,7 +434,7 @@ namespace leart
 
 	bool operator== (const BigInteger& first_number, const long long second_number)
 	{
-		if (second_number >= BigInteger::base)
+		if (second_number >= BigInteger::base || second_number < 0)
 			return operator==(first_number, BigInteger(second_number));
 		if (first_number.size() > 1)
 			return false;
@@ -444,16 +444,16 @@ namespace leart
 	}
 	bool operator!= (const BigInteger& first_number, const long long second_number)
 	{
-		if (second_number >= BigInteger::base)
+		if (second_number >= BigInteger::base || second_number < 0)
 			return operator!=(first_number, BigInteger(second_number));
 		if (first_number.size() > 1)
 			return true;
 
 		return first_number[0] != second_number;
 	}
-	bool operator< (const BigInteger& first_number, const long long second_number)
+	bool operator<  (const BigInteger& first_number, const long long second_number)
 	{
-		if (second_number >= BigInteger::base)
+		if (second_number >= BigInteger::base || second_number < 0)
 			return operator<(first_number, BigInteger(second_number));
 		if (first_number.size() > 1)
 			return false;
@@ -462,16 +462,16 @@ namespace leart
 	}
 	bool operator<= (const BigInteger& first_number, const long long second_number)
 	{
-		if (second_number >= BigInteger::base)
+		if (second_number >= BigInteger::base || second_number < 0)
 			return operator<=(first_number, BigInteger(second_number));
 		if (first_number.size() > 1)
 			return false;
 
 		return first_number[0] <= second_number;
 	}
-	bool operator> (const BigInteger& first_number, const long long second_number)
+	bool operator>  (const BigInteger& first_number, const long long second_number)
 	{
-		if (second_number >= BigInteger::base)
+		if (second_number >= BigInteger::base || second_number < 0)
 			return operator>(first_number, BigInteger(second_number));
 		if (first_number.size() > 1)
 			return true;
@@ -480,34 +480,35 @@ namespace leart
 	}
 	bool operator>= (const BigInteger& first_number, const long long second_number)
 	{
-		if (second_number >= BigInteger::base)
+		if (second_number >= BigInteger::base || second_number < 0)
 			return operator<(first_number, BigInteger(second_number));
 		if (first_number.size() > 1)
 			return true;
 
 		return first_number[0] >= second_number;
 	}
-	bool operator== (const long long second_number, const BigInteger& first_number)
+
+	bool operator== (const long long second_number,  const BigInteger& first_number)
 	{
 		return operator==(first_number, second_number);
 	}
-	bool operator!= (const long long second_number, const BigInteger& first_number)
+	bool operator!= (const long long second_number,  const BigInteger& first_number)
 	{
 		return operator!=(first_number, second_number);
 	}
-	bool operator<  (const long long second_number, const BigInteger& first_number)
+	bool operator<  (const long long second_number,  const BigInteger& first_number)
 	{
 		return operator<(first_number, second_number);
 	}
-	bool operator<= (const long long second_number, const BigInteger& first_number)
+	bool operator<= (const long long second_number,  const BigInteger& first_number)
 	{
 		return operator<=(first_number, second_number);
 	}
-	bool operator>  (const long long second_number, const BigInteger& first_number)
+	bool operator>  (const long long second_number,  const BigInteger& first_number)
 	{
 		return operator>(first_number, second_number);
 	}
-	bool operator>= (const long long second_number, const BigInteger& first_number)
+	bool operator>= (const long long second_number,  const BigInteger& first_number)
 	{
 		return operator>=(first_number, second_number);
 	}
