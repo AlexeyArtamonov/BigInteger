@@ -431,6 +431,87 @@ namespace leart
 	{
 		return (first_number < second_number || first_number == second_number);
 	}
+
+	bool operator== (const BigInteger& first_number, const long long second_number)
+	{
+		if (second_number >= BigInteger::base)
+			return operator==(first_number, BigInteger(second_number));
+		if (first_number.size() > 1)
+			return false;
+
+		return first_number[0] == second_number;
+			
+	}
+	bool operator!= (const BigInteger& first_number, const long long second_number)
+	{
+		if (second_number >= BigInteger::base)
+			return operator!=(first_number, BigInteger(second_number));
+		if (first_number.size() > 1)
+			return true;
+
+		return first_number[0] != second_number;
+	}
+	bool operator< (const BigInteger& first_number, const long long second_number)
+	{
+		if (second_number >= BigInteger::base)
+			return operator<(first_number, BigInteger(second_number));
+		if (first_number.size() > 1)
+			return false;
+		
+		return first_number[0] < second_number;
+	}
+	bool operator<= (const BigInteger& first_number, const long long second_number)
+	{
+		if (second_number >= BigInteger::base)
+			return operator<=(first_number, BigInteger(second_number));
+		if (first_number.size() > 1)
+			return false;
+
+		return first_number[0] <= second_number;
+	}
+	bool operator> (const BigInteger& first_number, const long long second_number)
+	{
+		if (second_number >= BigInteger::base)
+			return operator>(first_number, BigInteger(second_number));
+		if (first_number.size() > 1)
+			return true;
+
+		return first_number[0] > second_number;
+	}
+	bool operator>= (const BigInteger& first_number, const long long second_number)
+	{
+		if (second_number >= BigInteger::base)
+			return operator<(first_number, BigInteger(second_number));
+		if (first_number.size() > 1)
+			return true;
+
+		return first_number[0] >= second_number;
+	}
+	bool operator== (const long long second_number, const BigInteger& first_number)
+	{
+		return operator==(first_number, second_number);
+	}
+	bool operator!= (const long long second_number, const BigInteger& first_number)
+	{
+		return operator!=(first_number, second_number);
+	}
+	bool operator<  (const long long second_number, const BigInteger& first_number)
+	{
+		return operator<(first_number, second_number);
+	}
+	bool operator<= (const long long second_number, const BigInteger& first_number)
+	{
+		return operator<=(first_number, second_number);
+	}
+	bool operator>  (const long long second_number, const BigInteger& first_number)
+	{
+		return operator>(first_number, second_number);
+	}
+	bool operator>= (const long long second_number, const BigInteger& first_number)
+	{
+		return operator>=(first_number, second_number);
+	}
+
 	#pragma endregion 
 
 	BigInteger& BigInteger::operator= (const BigInteger& number)

@@ -98,19 +98,26 @@ namespace leart
         const BigInteger& operator*= (const long long number);
         
     public:
-        friend bool operator== (const BigInteger& first_number, const BigInteger& second_number);
-        friend bool operator!= (const BigInteger& first_number, const BigInteger& second_number);
-        friend bool operator< (const BigInteger& first_number, const BigInteger& second_number);
-        friend bool operator<= (const BigInteger& first_number, const BigInteger& second_number);
-        friend bool operator> (const BigInteger& first_number, const BigInteger& second_number);
-        friend bool operator>= (const BigInteger& first_number, const BigInteger& second_number);
-        //TODO: Implement
-        /*friend bool operator== (const BigInteger& first_number, const long long);
-        friend bool operator!= (const BigInteger& first_number, const long long);
-        friend bool operator< (const BigInteger& first_number,  const long long);
-        friend bool operator<= (const BigInteger& first_number, const long long);
-        friend bool operator> (const BigInteger& first_number,  const long long);
-        friend bool operator>= (const BigInteger& first_number, const long long);*/
+        friend bool operator== (const BigInteger& first_number,  const BigInteger& second_number);
+        friend bool operator!= (const BigInteger& first_number,  const BigInteger& second_number);
+        friend bool operator<  (const BigInteger& first_number,  const BigInteger& second_number);
+        friend bool operator<= (const BigInteger& first_number,  const BigInteger& second_number);
+        friend bool operator>  (const BigInteger& first_number,  const BigInteger& second_number);
+        friend bool operator>= (const BigInteger& first_number,  const BigInteger& second_number);
+
+        friend bool operator== (const BigInteger& first_number,  const long long second_number);
+        friend bool operator!= (const BigInteger& first_number,  const long long second_number);
+        friend bool operator<  (const BigInteger& first_number,  const long long second_number);
+        friend bool operator<= (const BigInteger& first_number,  const long long second_number);
+        friend bool operator>  (const BigInteger& first_number,  const long long second_number);
+        friend bool operator>= (const BigInteger& first_number,  const long long second_number);
+
+        friend bool operator== (const long long second_number,  const BigInteger& first_number);
+        friend bool operator!= (const long long second_number,  const BigInteger& first_number);
+        friend bool operator<  (const long long second_number,  const BigInteger& first_number);
+        friend bool operator<= (const long long second_number,  const BigInteger& first_number);
+        friend bool operator>  (const long long second_number,  const BigInteger& first_number);
+        friend bool operator>= (const long long second_number,  const BigInteger& first_number);
     
     public:
         BigInteger& operator= (const BigInteger& object_to_assign);
