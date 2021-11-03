@@ -52,15 +52,19 @@ namespace leart
 
     public:
         BigInteger();
+
         template<typename Type, std::enable_if_t<std::is_integral<Type>::value, bool> = true>
         inline BigInteger(const Type integer_representation_of_number)
         {
             SetArray(integer_representation_of_number);
         }
+
         // Can throw std::invalid_argument if number isn't correct
         BigInteger(const std::string& string_representation_of_number);
+
         // Can throw std::invalid_argument if number isn't correct
         BigInteger(const char* const string_representation_of_number);
+
         BigInteger(const BigInteger& object_to_copy);
 
     private:
@@ -80,7 +84,7 @@ namespace leart
         friend BigInteger operator- (const BigInteger& first_number, const long long second_number); // Logic only
         friend BigInteger operator* (const BigInteger& first_number, const long long second_number); // Logic only
 
-        friend BigInteger operator* (const long long first_number, const BigInteger& second_number); // Logic only
+        friend BigInteger operator* (const long long first_number,   const BigInteger& second_number); // Logic only
 
         BigInteger& operator++ (); // Prefix Increment
         BigInteger operator++ (int); // Postfix Increment
@@ -89,13 +93,13 @@ namespace leart
         BigInteger operator-- (int); // Postfix Decrement
 
         const BigInteger& operator+= (const BigInteger& number);
-        const BigInteger& operator+= (const long long number);
+        const BigInteger& operator+= (const long long   number);
 
         const BigInteger& operator-= (const BigInteger& number);
-        const BigInteger& operator-= (const long long number);
+        const BigInteger& operator-= (const long long   number);
 
         const BigInteger& operator*= (const BigInteger& number);
-        const BigInteger& operator*= (const long long number);
+        const BigInteger& operator*= (const long long   number);
         
     public:
         friend bool operator== (const BigInteger& first_number,  const BigInteger& second_number);
@@ -137,19 +141,23 @@ namespace leart
         int size() const;
 
     private:
-        void SetArray(std::string& string_representation_of_number);
-        void SetArray(const long long integer_representation_of_number);
+        void SetArray(std::string&       string_representation_of_number);
+        void SetArray(const long long    integer_representation_of_number);
         void SetArray(const std::string& string_representation_of_number);
-        void SetSign(std::string& string_representation_of_number);
+        void SetSign(std::string&        string_representation_of_number);
 
-        static int  is_greater(const BigInteger& first_number, const  BigInteger& second_number);
+        static int  is_greater(const BigInteger& first_number, const BigInteger& second_number);
+
         static BigInteger Sub(const BigInteger& first_number, const BigInteger& second_number);
         static BigInteger Add(const BigInteger& first_number, const BigInteger& second_number);
         static BigInteger Mul(const BigInteger& first_number, const BigInteger& second_number);
 
-        static BigInteger Sub(const BigInteger& first_number, const type second_number); // Only when second number < base
-        static BigInteger Add(const BigInteger& first_number, const type second_number); // Only when second number < base
-        static BigInteger Mul(const BigInteger& first_number, const type second_number); // Only when second number < base
+        // Works only when second number < base, else cast second number to BigInteger
+        static BigInteger Sub(const BigInteger& first_number, const type second_number); 
+        // Works only when second number < base, else cast second number to BigInteger
+        static BigInteger Add(const BigInteger& first_number, const type second_number);
+        // Works only when second number < base, else cast second number to BigInteger
+        static BigInteger Mul(const BigInteger& first_number, const type second_number);
 
         BigInteger& Inc(BigInteger& number);
         BigInteger& Dec(BigInteger& number);
