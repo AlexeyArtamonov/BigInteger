@@ -149,7 +149,7 @@ namespace leart
         void SetArray(const std::string& string_representation_of_number);
         void SetSign(std::string&        string_representation_of_number);
 
-        static int  is_greater(const BigInteger& first_number, const BigInteger& second_number);
+        static int  BigIntegerCompare(const BigInteger& first_number, const BigInteger& second_number);
 
         static BigInteger Sub(const BigInteger& first_number, const BigInteger& second_number);
         static BigInteger Add(const BigInteger& first_number, const BigInteger& second_number);
