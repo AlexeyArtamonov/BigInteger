@@ -348,78 +348,115 @@ namespace leart
 	#pragma region Comparison functions
 	bool operator== (const BigInteger& first_number, const BigInteger& second_number)
 	{
-		return (BigInteger::is_greater(first_number, second_number) == 2 && first_number.Sign() == second_number.Sign());
+		return (BigInteger::is_greater(first_number, second_number) == 0 && first_number.Sign() == second_number.Sign());
 	}
 	bool operator!= (const BigInteger& first_number, const BigInteger& second_number)
 	{
-		return !(BigInteger::is_greater(first_number, second_number) == 2 && first_number.Sign() == second_number.Sign());
+		return !operator==(first_number, second_number);
 	}
 	bool operator>  (const BigInteger& first_number, const BigInteger& second_number)
 	{
-		const int isGreaterCall = BigInteger::is_greater(first_number, second_number);
-		
-		switch (isGreaterCall)
+		const int BIcmp = BigInteger::is_greater(first_number, second_number);
+		switch (BIcmp)
 		{
-		case 0:
-		{
-			if ((first_number.Sign() == 1 && second_number.Sign() == 0)
-				|| (first_number.Sign() == 0 && second_number.Sign() == 0))
-				return true;
-			else
-				return false;
-		}
-		case 1:
-		{
-			if ((first_number.Sign() == 1 && second_number.Sign() == 1)
-				|| (first_number.Sign() == 1 && second_number.Sign() == 0))
-				return true;
-			else
-				return false;
-		}
-		case 2:
-		{
-			if (first_number.Sign() == 1 && second_number.Sign() == 0)
-				return true;
-			else
-				return false;
-		}
-		default:
-			return false; 
+			/*
+			* 3	>  5 = false
+			*-3 >  5 = false
+			* 3	> -5 = true
+			*-3	> -5 = true
+			*/
+			case -1:
+			{
+					 if (first_number.Sign() == plus && second_number.Sign() == plus)
+					return false;
+				else if (first_number.Sign() == minus && second_number.Sign() == plus)
+					return false;
+				else
+					return true;
+				break;
+			}
+			/*
+			* 3	> -3 = true
+			*-3 >  3 = false
+			* 3	>  3 = false
+			*-3	> -3 = false
+			*/
+			case 0:
+			{
+				if (first_number.Sign() == plus && second_number.Sign() == minus)
+					return true;
+				else
+					return false;
+			}
+			/*
+			*-5	> -3 = false
+			*-5 >  3 = false
+			* 5	>  3 = true
+			* 5	> -3 = true
+			*/
+			case 1:
+			{
+					 if (first_number.Sign() == minus && second_number.Sign() == minus)
+					return false;
+				else if (first_number.Sign() == minus && second_number.Sign() == plus)
+					return false;
+				else
+					return true;
+
+				break;
+			}
 		}
 	
 	}
 	bool operator<  (const BigInteger& first_number, const BigInteger& second_number)
 	{
-		const int isGreaterCall = BigInteger::is_greater(first_number, second_number);
+		const int BIcmp = BigInteger::is_greater(first_number, second_number);
+		switch (BIcmp)
+		{
+			/*
+			* 3	<  5 = true
+			*-3 <  5 = true
+			* 3	< -5 = false
+			*-3	< -5 = false
+			*/
+			case -1:
+			{
+					 if (first_number.Sign() == plus && second_number.Sign() == plus)
+					return true;
+				else if (first_number.Sign() == minus && second_number.Sign() == plus)
+					return true;
+				else
+					return false;
+			}
+			/*
+			*-3 <  3 = true
+			* 3	<  3 = false
+			* 3	< -3 = false
+			*-3	< -3 = false
+			*/
+			case 0:
+			{
+				if (first_number.Sign() == minus && second_number.Sign() == plus)
+					return true;
+				else
+					return false;
+			}
+			/*
+			* 5	<  3 = false
+			* 5	< -3 = false
+			*-5 <  3 = true
+			*-5	< -3 = true
+			*/
+			case 1:
+			{
+					 if (first_number.Sign() == plus && second_number.Sign() == plus)
+					return false;
+				else if (first_number.Sign() == plus && second_number.Sign() == minus)
+					return false;
+				return true;
+			}
+		}
 		
-		switch (isGreaterCall)
-		{
-		case 0:
-		{
-			if ((first_number.Sign() == 0 && second_number.Sign() == 1)
-				|| (first_number.Sign() == 1 && second_number.Sign() == 1))
-				return true;
-			else
-				return false;
-		}
-		case 1:
-		{
-			if ((first_number.Sign() == 0 && second_number.Sign() == 0)
-				|| (first_number.Sign() == 0 && second_number.Sign() == 1))
-				return true;
-			else
-				return false;
-		}
-		case 2:
-		{
-			if (first_number.Sign() == 0 && second_number.Sign() == 1)
-				return true;
-			else
-				return false;
-		}
-		default:
-			return false;
-		}
 	}
 	bool operator>= (const BigInteger& first_number, const BigInteger& second_number)
 	{
@@ -637,13 +674,11 @@ namespace leart
 			}
 		}
 	}
-	//TODO: REDO
+
 	/// <summary>
-	/// 
+	/// Works like strcmp
 	/// </summary>
-	/// <param name="first_number"></param>
-	/// <param name="second_number"></param>
-	/// <returns>Returns 1 if first number is greater, 0 if second number, and 2 if they are equal</returns>
+	/// <returns> -1 if first number lesser than second, 0 if they are equal, 1 if first number greater than second</returns>
 	int  BigInteger::is_greater(const BigInteger& first_number, const  BigInteger& second_number)
 	{
 		if (first_number.size() > second_number.size())
@@ -651,18 +686,20 @@ namespace leart
 		else
 		{
 			if (second_number.size() > first_number.size())
-				return 0;
+				return -1;
 			else
 			{
-				for (int i = first_number.size() -1; i >= 0; i--)
+				for (int i = first_number.size() - 1; i >= 0; i--)
+				{
 					if (first_number[i] > second_number[i])
 						return 1;
 					else
 					{
-						if (first_number[i] < second_number[i])
-							return 0;
+						if (second_number[i] > first_number[i])
+							return -1;
 					}
-				return 2;
+				}
+				return 0;
 			}
 		}
 	}
