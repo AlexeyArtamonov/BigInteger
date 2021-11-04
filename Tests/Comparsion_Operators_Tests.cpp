@@ -1,4 +1,4 @@
-#include "../Headers/BigInteger.h"
+#include "BigInteger.h"
 #include "CppUnitTest.h"
 
 using namespace Microsoft::VisualStudio::CppUnitTestFramework;
