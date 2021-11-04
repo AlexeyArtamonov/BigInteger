@@ -50,8 +50,8 @@ namespace leart
         static const type base = 1'000'000'000; // Max value of each element of array 
         static constexpr short digit_per_element_of_array = leart::log10(base);
 
-        #define minus 1
-        #define plus  0
+        #define minus 0
+        #define plus  1
 
     public:
         BigInteger();
