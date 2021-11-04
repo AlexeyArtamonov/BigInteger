@@ -54,8 +54,6 @@ namespace leart
 		return arr[index];
 	}
 
-
-	
 	std::istream& operator>>(std::istream& input, BigInteger& number)
 	{
 		std::string temp;
@@ -68,7 +66,7 @@ namespace leart
 		return (output << number.Get_String_Representation());
 	}
 
-	#pragma region Arthmetic functions
+	#pragma region Arithmetic operators
 	BigInteger operator+ (const BigInteger& first_number, const BigInteger& second_number)
 	{
 		BigInteger result;
@@ -273,7 +271,7 @@ namespace leart
 		result.sign = !(first_number.sign ^ (second_number >= 0? 1 : 0));
 		return result;
 	}
-	BigInteger operator* (const long long first_number, const BigInteger& second_number)
+	BigInteger operator* (const long long first_number,   const BigInteger& second_number)
 	{
 		return operator* (second_number, first_number);
 	}
@@ -288,7 +286,7 @@ namespace leart
 			return Inc(*this);
 	}
 	// Postfix Increment
-	BigInteger BigInteger::operator++ (int) 
+	BigInteger  BigInteger::operator++ (int) 
 	{
 		BigInteger old = *this;
 		--(*this);
@@ -304,7 +302,7 @@ namespace leart
 			return Dec(*this);
 	}
 	// Postfix Decrement
-	BigInteger BigInteger::operator-- (int)
+	BigInteger  BigInteger::operator-- (int)
 	{
 		BigInteger old = *this;
 		--(*this);
@@ -318,7 +316,7 @@ namespace leart
 		*this = *this + number;
 		return *this;
 	}
-	const BigInteger& BigInteger::operator+= (const long long number)
+	const BigInteger& BigInteger::operator+= (const long long   number)
 	{
 		*this = *this + number;
 		return *this;
@@ -329,7 +327,7 @@ namespace leart
 		*this = *this - number;
 		return *this;
 	}
-	const BigInteger& BigInteger::operator-= (const long long number)
+	const BigInteger& BigInteger::operator-= (const long long   number)
 	{
 		*this = *this - number;
 		return *this;
@@ -340,7 +338,7 @@ namespace leart
 		*this = *this * number;
 		return *this;
 	}
-	const BigInteger& BigInteger::operator*= (const long long number)
+	const BigInteger& BigInteger::operator*= (const long long   number)
 	{
 		*this = *this * number;
 		return *this;
@@ -524,7 +522,7 @@ namespace leart
 		}
 		return *this;
 	}
-	BigInteger& BigInteger::operator-()
+	BigInteger& BigInteger::operator- ()
 	{
 		if (*this != 0)
 			sign = !sign;
@@ -540,7 +538,10 @@ namespace leart
 		return std::stoll(std::string(*this));
 	}
 
-	bool BigInteger::Sign() const { return sign; }
+	bool BigInteger::Sign() const
+	{
+		return sign;
+	}
 	int BigInteger::size() const
 	{
 		return arr.size();
@@ -585,7 +586,7 @@ namespace leart
 		return str;
 	}
 
-	void BigInteger::SetArray(std::string& str)
+	void BigInteger::SetArray(std::string&       str)
 	{
 		SetSign(str);
 
@@ -608,7 +609,7 @@ namespace leart
 			arr[i] = std::stol(temp);
 		}
 	}
-	void BigInteger::SetArray(const long long number)
+	void BigInteger::SetArray(const long long    number)
 	{
 		std::string str = std::to_string(number);
 		SetArray(str);
@@ -667,7 +668,7 @@ namespace leart
 	}
 
 	//TODO: REDO with opmization
-	#pragma region Arithmetic operations
+	#pragma region Arithmetic functions
 	BigInteger BigInteger::Sub(const BigInteger& first_number, const BigInteger& second_number)
 	{
 		BigInteger a = first_number;
@@ -734,9 +735,11 @@ namespace leart
 		}
 		return a;
 	}
+	//TODO: REDO with new style
 	BigInteger BigInteger::Mul(const BigInteger& first_number, const BigInteger& second_number)
 	{
-		vocmplx fa(first_number.arr.begin(), first_number.arr.end()), fb(second_number.arr.begin(), second_number.arr.end());
+		vocmplx fa(first_number.arr.begin(), first_number.arr.end()),
+			    fb(second_number.arr.begin(), second_number.arr.end());
 
 		int n = 1;
 		while (n < std::max(first_number.size(), second_number.size()))  n <<= 1;
@@ -769,7 +772,6 @@ namespace leart
 		BigInteger result;
 		result.arr = res;
 		return result;
-
 	}
 
 	BigInteger BigInteger::Sub(const BigInteger& first_number, const type second_number)
