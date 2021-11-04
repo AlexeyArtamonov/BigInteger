@@ -278,6 +278,7 @@ namespace leart
 	}
 
 	//TODO: Add tests
+
 	// Prefix Increment
 	BigInteger& BigInteger::operator++ ()
 	{
@@ -290,7 +291,7 @@ namespace leart
 	BigInteger  BigInteger::operator++ (int) 
 	{
 		BigInteger old = *this;
-		--(*this);
+		++(*this);
 		return old;
 	}
 
