@@ -71,7 +71,7 @@ namespace leart
 	{
 		BigInteger result;
 
-		int IsgreaterCallResult = BigInteger::BigIntegerCompare(first_number, second_number);
+		const int BIcmp = BigInteger::BigIntegerCompare(first_number, second_number);
 		if (first_number.sign == 1 && second_number.sign == 1)
 		{
 			if (first_number.size() >= second_number.size())
@@ -83,12 +83,12 @@ namespace leart
 		}
 		else if (first_number.sign == 1 && second_number.sign == 0)
 		{
-			if (IsgreaterCallResult == 2)
+			if (BIcmp == 0)
 			{
 				result.SetArray(0);
 				result.sign = 1;
 			}
-			else if (IsgreaterCallResult == 1)
+			else if (BIcmp == 1)
 			{
 				result = BigInteger::Sub(first_number, second_number);
 				result.sign = 1;
@@ -101,12 +101,12 @@ namespace leart
 		}
 		else if (first_number.sign == 0 && second_number.sign == 1)
 		{
-			if (IsgreaterCallResult == 2)
+			if (BIcmp == 0)
 			{
 				result.SetArray(0);
 				result.sign = 1;
 			}
-			else if (IsgreaterCallResult == 1)
+			else if (BIcmp == 1)
 			{
 				result = BigInteger::Sub(first_number, second_number);
 				result.sign = 0;
@@ -131,15 +131,16 @@ namespace leart
 	BigInteger operator- (const BigInteger& first_number, const BigInteger& second_number)
 	{
 		BigInteger result;
+		const int BIcmp = BigInteger::BigIntegerCompare(first_number, second_number);
 
 		if (first_number.sign == 1 && second_number.sign == 1)  
 		{
-			if (BigInteger::BigIntegerCompare(first_number, second_number) == 2)
+			if (BIcmp == 0)
 			{
 				result.SetArray(0);
 				result.sign = 1;
 			}
-			else if (BigInteger::BigIntegerCompare(first_number, second_number) == 1)
+			else if (BIcmp == 1)
 			{
 				result = BigInteger::Sub(first_number, second_number);
 				result.sign = 1;
@@ -153,7 +154,7 @@ namespace leart
 		else if (first_number.sign == 0 && second_number.sign == 1)
 		{
 
-			if (BigInteger::BigIntegerCompare(first_number, second_number) == 1)
+			if (BIcmp == 1)
 			{
 				result = BigInteger::Add(first_number, second_number);
 				result.sign = 0;
@@ -166,7 +167,7 @@ namespace leart
 		}
 		else if (first_number.sign == 1 && second_number.sign == 0)
 		{
-			if (BigInteger::BigIntegerCompare(first_number, second_number) == 1)
+			if (BIcmp == 1)
 			{
 				result = BigInteger::Add(first_number, second_number);
 				result.sign = 1;
@@ -179,12 +180,12 @@ namespace leart
 		}
 		else
 		{
-			if (BigInteger::BigIntegerCompare(first_number, second_number) == 2)
+			if (BIcmp == 0)
 			{
 				result.SetArray(0);
 				result.sign = 1;
 			}
-			else if (BigInteger::BigIntegerCompare(first_number, second_number) == 1)
+			else if (BIcmp == 1)
 			{
 				result = BigInteger::Sub(first_number, second_number);
 				result.sign = 0;
