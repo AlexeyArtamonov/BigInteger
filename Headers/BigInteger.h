@@ -47,11 +47,16 @@ namespace leart
     {
         using type = unsigned long long; // Type of elements of array
 
-        static const type base = 1'000'000'000; // Max value of each element of array 
+        static const type base = 1'000'000; // Max value of each element of array 
         static constexpr short digit_per_element_of_array = leart::log10(base);
 
-        #define minus 0
-        #define plus  1
+    public:
+        enum class Sign : unsigned char
+        {
+            minus = 0,
+            plus = 1
+        };
+
 
     public:
         BigInteger();
@@ -72,22 +77,22 @@ namespace leart
 
     private:
         type& operator[] (const int index);
-        type operator[] (const int index) const;
+        const type& operator[] (const int index) const;
 
     public:
         friend std::ostream& operator<<(std::ostream& output, const BigInteger& number);
         friend std::istream& operator>>(std::istream& input, BigInteger& number);
 
     public:
-        friend BigInteger operator- (const BigInteger& first_number, const BigInteger& second_number); // Logic only
-        friend BigInteger operator+ (const BigInteger& first_number, const BigInteger& second_number); // Logic only
-        friend BigInteger operator* (const BigInteger& first_number, const BigInteger& second_number); // Logic only
+        friend const BigInteger operator- (const BigInteger& first_number, const BigInteger& second_number); // Logic only
+        friend const BigInteger operator+ (const BigInteger& first_number, const BigInteger& second_number); // Logic only
+        friend const BigInteger operator* (const BigInteger& first_number, const BigInteger& second_number); // Logic only
 
-        friend BigInteger operator+ (const BigInteger& first_number, const long long second_number); // Logic only
-        friend BigInteger operator- (const BigInteger& first_number, const long long second_number); // Logic only
-        friend BigInteger operator* (const BigInteger& first_number, const long long second_number); // Logic only
+        friend const BigInteger operator+ (const BigInteger& first_number, const long long second_number); // Logic only
+        friend const BigInteger operator- (const BigInteger& first_number, const long long second_number); // Logic only
+        friend const BigInteger operator* (const BigInteger& first_number, const long long second_number); // Logic only
 
-        friend BigInteger operator* (const long long first_number,   const BigInteger& second_number); // Logic only
+        friend const BigInteger operator* (const long long first_number,   const BigInteger& second_number); // Logic only
 
         BigInteger& operator++ (); // Prefix Increment
         BigInteger operator++ (int); // Postfix Increment
@@ -136,12 +141,19 @@ namespace leart
         explicit operator std::string() const;
 
     public:
-        bool Sign() const;
-        std::string Get_String_Representation() const;
-        std::wstring Get_Wstring_Representation() const;
+        Sign sign() const;
+        std::string getString() const;
+        std::wstring getWstring() const;
 
     private:
         int size() const;
+        inline Sign OppositeSign(Sign sign)
+        {
+            if (sign == Sign::minus)
+                return Sign::plus;
+            else
+                return Sign::minus;
+        }
 
     private:
         void SetArray(std::string&       string_representation_of_number);
@@ -167,6 +179,6 @@ namespace leart
 
     private:
         std::vector<type> arr;
-        bool sign = 1;
+        Sign _sign = Sign::plus;
     };
 }

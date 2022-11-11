@@ -27,16 +27,13 @@ SOFTWARE.
 #include <complex>
 namespace leart
 {
-	using cmplxtype = double;
-	using vocmplx = std::vector<std::complex<cmplxtype>>;
 	class FFT
 	{
 	private:
-		FFT();
-		FFT(const FFT&) = delete;
-		static vocmplx roots;
+		FFT() = delete;
+		static std::vector<std::complex<double>> roots;
 	public:
-		static vocmplx FFT_(const vocmplx& vec);
-		static vocmplx RFFT_(const vocmplx& vec);
+		static std::vector<std::complex<double>> transform(const std::vector<std::complex<double>>& vec);
+		static std::vector<std::complex<double>> reverseTransform(const std::vector<std::complex<double>>& vec);
 	};
 }

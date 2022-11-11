@@ -41,7 +41,7 @@ namespace leart
 	}
 	BigInteger::BigInteger(const BigInteger&  copy)
 	{
-		sign = copy.sign;
+		_sign = copy._sign;
 		arr = copy.arr;
 	}
 
@@ -49,7 +49,7 @@ namespace leart
 	{
 		return arr[index];
 	}
-	BigInteger::type BigInteger::operator[] (const int index) const
+	const BigInteger::type& BigInteger::operator[] (const int index) const
 	{
 		return arr[index];
 	}
@@ -63,58 +63,58 @@ namespace leart
 	}
 	std::ostream& operator<<(std::ostream& output, const BigInteger& number)
 	{
-		return (output << number.Get_String_Representation());
+		return (output << number.getString());
 	}
 
 	#pragma region Arithmetic operators
-	BigInteger operator+ (const BigInteger& first_number, const BigInteger& second_number)
+	const BigInteger operator+ (const BigInteger& first_number, const BigInteger& second_number)
 	{
 		BigInteger result;
 
 		const int BIcmp = BigInteger::BigIntegerCompare(first_number, second_number);
-		if (first_number.sign == 1 && second_number.sign == 1)
+		if (first_number._sign == BigInteger::Sign::plus  && second_number._sign == BigInteger::Sign::plus)
 		{
 			if (first_number.size() >= second_number.size())
 				result = BigInteger::Add(first_number, second_number);
 			else
 				result = BigInteger::Add(second_number, first_number);
 
-			result.sign = 1;
+			result._sign = BigInteger::Sign::plus;
 		}
-		else if (first_number.sign == 1 && second_number.sign == 0)
+		else if (first_number._sign == BigInteger::Sign::plus && second_number._sign == BigInteger::Sign::minus)
 		{
 			if (BIcmp == 0)
 			{
 				result.SetArray(0);
-				result.sign = 1;
+				result._sign = BigInteger::Sign::plus;
 			}
 			else if (BIcmp == 1)
 			{
 				result = BigInteger::Sub(first_number, second_number);
-				result.sign = 1;
+				result._sign = BigInteger::Sign::plus;
 			}
 			else
 			{
 				result = BigInteger::Sub(second_number, first_number);
-				result.sign = 0;
+				result._sign = BigInteger::Sign::minus;
 			}
 		}
-		else if (first_number.sign == 0 && second_number.sign == 1)
+		else if (first_number._sign == BigInteger::Sign::minus && second_number._sign == BigInteger::Sign::plus)
 		{
 			if (BIcmp == 0)
 			{
 				result.SetArray(0);
-				result.sign = 1;
+				result._sign = BigInteger::Sign::plus;
 			}
 			else if (BIcmp == 1)
 			{
 				result = BigInteger::Sub(first_number, second_number);
-				result.sign = 0;
+				result._sign = BigInteger::Sign::minus;
 			}
 			else
 			{
 				result = BigInteger::Sub(second_number, first_number);
-				result.sign = 1;
+				result._sign = BigInteger::Sign::plus;
 			}
 		}
 		else
@@ -123,59 +123,59 @@ namespace leart
 				result = BigInteger::Add(first_number, second_number);
 			else
 				result = BigInteger::Add(second_number, first_number);
-			result.sign = 0;
+			result._sign = BigInteger::Sign::minus;
 		}
 
 		return result;
 	}
-	BigInteger operator- (const BigInteger& first_number, const BigInteger& second_number)
+	const BigInteger operator- (const BigInteger& first_number, const BigInteger& second_number)
 	{
 		BigInteger result;
-		const int BIcmp = BigInteger::BigIntegerCompare(first_number, second_number);
 
-		if (first_number.sign == 1 && second_number.sign == 1)  
+		const int BIcmp = BigInteger::BigIntegerCompare(first_number, second_number);
+		if (first_number._sign == BigInteger::Sign::plus && second_number._sign == BigInteger::Sign::plus)
 		{
 			if (BIcmp == 0)
 			{
 				result.SetArray(0);
-				result.sign = 1;
+				result._sign = BigInteger::Sign::plus;
 			}
 			else if (BIcmp == 1)
 			{
 				result = BigInteger::Sub(first_number, second_number);
-				result.sign = 1;
+				result._sign = BigInteger::Sign::plus;
 			}
 			else
 			{
 				result = BigInteger::Sub(second_number,first_number);
-				result.sign = 0;
+				result._sign = BigInteger::Sign::minus;
 			}
 		}
-		else if (first_number.sign == 0 && second_number.sign == 1)
+		else if (first_number._sign == BigInteger::Sign::minus && second_number._sign == BigInteger::Sign::plus)
 		{
 
 			if (BIcmp == 1)
 			{
 				result = BigInteger::Add(first_number, second_number);
-				result.sign = 0;
+				result._sign = BigInteger::Sign::minus;
 			}
 			else
 			{
 				result = BigInteger::Add(second_number, first_number);
-				result.sign = 0;
+				result._sign = BigInteger::Sign::minus;
 			}
 		}
-		else if (first_number.sign == 1 && second_number.sign == 0)
+		else if (first_number._sign == BigInteger::Sign::plus && second_number._sign == BigInteger::Sign::minus)
 		{
 			if (BIcmp == 1)
 			{
 				result = BigInteger::Add(first_number, second_number);
-				result.sign = 1;
+				result._sign = BigInteger::Sign::plus;
 			}
 			else
 			{
 				result = BigInteger::Add(second_number, first_number);
-				result.sign = 1;
+				result._sign = BigInteger::Sign::plus;
 			}
 		}
 		else
@@ -183,24 +183,24 @@ namespace leart
 			if (BIcmp == 0)
 			{
 				result.SetArray(0);
-				result.sign = 1;
+				result._sign = BigInteger::Sign::plus;
 			}
 			else if (BIcmp == 1)
 			{
 				result = BigInteger::Sub(first_number, second_number);
-				result.sign = 0;
+				result._sign = BigInteger::Sign::minus;
 			}
 			else
 			{
 				result = BigInteger::Sub(second_number, first_number);
-				result.sign = 1;
+				result._sign = BigInteger::Sign::plus;
 			}
 		}
 
 		return result;
 
 	}
-	BigInteger operator* (const BigInteger& first_number, const BigInteger& second_number)
+	const BigInteger operator* (const BigInteger& first_number, const BigInteger& second_number)
 	{
 		if (first_number == 0 || second_number == 0)
 			return 0;
@@ -213,15 +213,14 @@ namespace leart
 			else
 			{
 				BigInteger result = BigInteger::Mul(first_number, second_number);
-				result.sign = !(first_number.sign ^ second_number.sign);
+				result._sign = (BigInteger::Sign)!((bool)first_number._sign ^ (bool)second_number._sign);
 				return result;
 			}
 		}
 		
 	}
 
-	//TODO: Needs test
-	BigInteger operator+ (const BigInteger& first_number, const long long second_number)
+	const BigInteger operator+ (const BigInteger& first_number, const long long second_number)
 	{
 		if (second_number < 0)
 			return operator-(first_number, -second_number);
@@ -231,16 +230,17 @@ namespace leart
 
 		return BigInteger::Add(first_number, second_number);
 	}
-	BigInteger operator- (const BigInteger& first_number, const long long second_number)
+	const BigInteger operator- (const BigInteger& first_number, const long long second_number)
 	{
 		if (second_number < 0)
 			return operator+(first_number, -second_number);
 
 		BigInteger result;
+
 		if (first_number.size() > 1)
 		{
 			result = BigInteger::Sub(first_number, second_number);
-			result.sign = 1;
+			result._sign = BigInteger::Sign::plus;
 		}
 		else
 		{
@@ -249,12 +249,12 @@ namespace leart
 				if (first_number[0] > second_number)
 				{
 					result = BigInteger::Sub(first_number, second_number);
-					result.sign = 1;
+					result._sign = BigInteger::Sign::plus;
 				}
 				else
 				{
 					result = BigInteger::Sub((BigInteger)second_number, first_number);
-					result.sign = 0;
+					result._sign = BigInteger::Sign::minus;
 				}
 			}
 			else
@@ -262,27 +262,24 @@ namespace leart
 		}
 		return result;
 	}
-	//TODO: Redo all two functions above
-	BigInteger operator* (const BigInteger& first_number, const long long second_number)
+	const BigInteger operator* (const BigInteger& first_number, const long long second_number)
 	{
 		if (second_number >= BigInteger::base)
 			return operator*(first_number, (BigInteger)second_number);
 
 		BigInteger result = BigInteger::Mul(first_number,second_number);
-		result.sign = !(first_number.sign ^ (second_number >= 0? 1 : 0));
+		result._sign = (BigInteger::Sign)!((bool)first_number._sign ^ (second_number >= 0? 1 : 0));
 		return result;
 	}
-	BigInteger operator* (const long long first_number,   const BigInteger& second_number)
+	const BigInteger operator* (const long long first_number, const BigInteger& second_number)
 	{
 		return operator* (second_number, first_number);
 	}
 
-	//TODO: Add tests
-
 	// Prefix Increment
 	BigInteger& BigInteger::operator++ ()
 	{
-		if (sign == 0)
+		if (_sign == BigInteger::Sign::minus)
 			return Dec(*this);
 		else
 			return Inc(*this);
@@ -298,7 +295,7 @@ namespace leart
 	// Prefix Decrement
 	BigInteger& BigInteger::operator-- ()
 	{
-		if (sign == 0)
+		if (_sign == BigInteger::Sign::minus)
 			return Inc(*this);
 		else
 			return Dec(*this);
@@ -312,7 +309,6 @@ namespace leart
 		
 	}
 
-	//TODO: All four below need tests
 	const BigInteger& BigInteger::operator+= (const BigInteger& number)
 	{
 		*this = *this + number;
@@ -350,7 +346,7 @@ namespace leart
 	#pragma region Comparison functions
 	bool operator== (const BigInteger& first_number, const BigInteger& second_number)
 	{
-		return (BigInteger::BigIntegerCompare(first_number, second_number) == 0 && first_number.Sign() == second_number.Sign());
+		return (BigInteger::BigIntegerCompare(first_number, second_number) == 0 && first_number._sign == second_number._sign);
 	}
 	bool operator!= (const BigInteger& first_number, const BigInteger& second_number)
 	{
@@ -369,9 +365,9 @@ namespace leart
 			*/
 			case -1:
 			{
-					 if (first_number.Sign() == plus && second_number.Sign() == plus)
+					 if (first_number._sign == BigInteger::Sign::plus && second_number._sign == BigInteger::Sign::plus)
 					return false;
-				else if (first_number.Sign() == minus && second_number.Sign() == plus)
+				else if (first_number._sign == BigInteger::Sign::minus && second_number._sign == BigInteger::Sign::plus)
 					return false;
 				else
 					return true;
@@ -385,7 +381,7 @@ namespace leart
 			*/
 			case 0:
 			{
-				if (first_number.Sign() == plus && second_number.Sign() == minus)
+				if (first_number._sign == BigInteger::Sign::plus && second_number._sign == BigInteger::Sign::minus)
 					return true;
 				else
 					return false;
@@ -398,9 +394,9 @@ namespace leart
 			*/
 			case 1:
 			{
-					 if (first_number.Sign() == minus && second_number.Sign() == minus)
+					 if (first_number._sign == BigInteger::Sign::minus && second_number._sign == BigInteger::Sign::minus)
 					return false;
-				else if (first_number.Sign() == minus && second_number.Sign() == plus)
+				else if (first_number._sign == BigInteger::Sign::minus && second_number._sign == BigInteger::Sign::plus)
 					return false;
 				else
 					return true;
@@ -423,9 +419,9 @@ namespace leart
 			*/
 			case -1:
 			{
-					 if (first_number.Sign() == plus && second_number.Sign() == plus)
+					 if (first_number._sign == BigInteger::Sign::plus && second_number._sign == BigInteger::Sign::plus)
 					return true;
-				else if (first_number.Sign() == minus && second_number.Sign() == plus)
+				else if (first_number._sign == BigInteger::Sign::minus && second_number._sign == BigInteger::Sign::plus)
 					return true;
 				else
 					return false;
@@ -438,7 +434,7 @@ namespace leart
 			*/
 			case 0:
 			{
-				if (first_number.Sign() == minus && second_number.Sign() == plus)
+				if (first_number._sign == BigInteger::Sign::minus && second_number._sign == BigInteger::Sign::plus)
 					return true;
 				else
 					return false;
@@ -451,9 +447,9 @@ namespace leart
 			*/
 			case 1:
 			{
-					 if (first_number.Sign() == plus && second_number.Sign() == plus)
+					 if (first_number._sign == BigInteger::Sign::plus && second_number._sign == BigInteger::Sign::plus)
 					return false;
-				else if (first_number.Sign() == plus && second_number.Sign() == minus)
+				else if (first_number._sign == BigInteger::Sign::plus && second_number._sign == BigInteger::Sign::minus)
 					return false;
 				return true;
 			}
@@ -557,40 +553,40 @@ namespace leart
 		if (this != &number)
 		{
 			this->arr = number.arr;
-			this->sign = number.sign;
+			this->_sign = number._sign;
 		}
 		return *this;
 	}
 	BigInteger& BigInteger::operator- ()
 	{
 		if (*this != 0)
-			sign = !sign;
+			_sign = BigInteger::OppositeSign(_sign);
 		return *this;
 	}
 
 	BigInteger::operator std::string() const
 	{
-		return Get_String_Representation();
+		return getString();
 	}
 	BigInteger::operator long long() const
 	{
 		return std::stoll(std::string(*this));
 	}
 
-	bool BigInteger::Sign() const
+	BigInteger::Sign BigInteger::sign() const
 	{
-		return sign;
+		return _sign;
 	}
 	int BigInteger::size() const
 	{
 		return arr.size();
 	}
 
-	std::string BigInteger::Get_String_Representation() const
+	std::string BigInteger::getString() const
 	{
 		std::string str = "";
 
-		if (sign == 0)
+		if (_sign == BigInteger::Sign::minus)
 			str += "-";
 
 		// Adding first number without leading zeros (number stored in array in reverse order)
@@ -600,16 +596,18 @@ namespace leart
 		{
 			std::string temp = std::to_string(arr[i]);
 			while (temp.length() != digit_per_element_of_array && i != arr.size() - 1)
+			{
 				temp = "0" + temp;
+			}
 			str += temp;
 		}
 		return str;
 	}
-	std::wstring BigInteger::Get_Wstring_Representation() const
+	std::wstring BigInteger::getWstring() const
 	{
 		std::wstring str = L"";
 
-		if (sign == 0)
+		if (_sign == BigInteger::Sign::minus)
 			str += L"-";
 
 		// Adding first number without leading zeros (number stored in array in reverse order)
@@ -619,13 +617,15 @@ namespace leart
 		{
 			std::wstring temp = std::to_wstring(arr[i]);
 			while (temp.length() != digit_per_element_of_array && i != arr.size() - 1)
+			{
 				temp = L"0" + temp;
+			}
 			str += temp;
 		}
 		return str;
 	}
 
-	void BigInteger::SetArray(std::string&       str)
+	void BigInteger::SetArray(std::string& str)
 	{
 		SetSign(str);
 
@@ -648,7 +648,7 @@ namespace leart
 			arr[i] = std::stol(temp);
 		}
 	}
-	void BigInteger::SetArray(const long long    number)
+	void BigInteger::SetArray(const long long number)
 	{
 		std::string str = std::to_string(number);
 		SetArray(str);
@@ -664,14 +664,14 @@ namespace leart
 	{
 		if (str[0] == '+')
 		{
-			sign = 1;
+			_sign = BigInteger::Sign::plus;
 			str.erase(0, 1);
 		}
 		else
 		{
 			if (str[0] == '-')
 			{
-				sign = 0;
+				_sign = BigInteger::Sign::minus;
 				str.erase(0, 1);
 			}
 		}
@@ -706,7 +706,6 @@ namespace leart
 		}
 	}
 
-	//TODO: REDO with opmization
 	#pragma region Arithmetic functions
 	BigInteger BigInteger::Sub(const BigInteger& first_number, const BigInteger& second_number)
 	{
@@ -774,11 +773,11 @@ namespace leart
 		}
 		return a;
 	}
-	//TODO: REDO with new style
 	BigInteger BigInteger::Mul(const BigInteger& first_number, const BigInteger& second_number)
 	{
-		vocmplx fa(first_number.arr.begin(), first_number.arr.end()),
-			    fb(second_number.arr.begin(), second_number.arr.end());
+		std::vector<std::complex<double>>
+			fa(first_number.arr.begin(), first_number.arr.end()),
+			fb(second_number.arr.begin(), second_number.arr.end());
 
 		int n = 1;
 		while (n < std::max(first_number.size(), second_number.size()))  n <<= 1;
@@ -786,27 +785,35 @@ namespace leart
 
 		fa.resize(n,0), fb.resize(n,0);
 
-		fa = FFT::FFT_(fa);
-		fb = FFT::FFT_(fb);
+		fa = FFT::transform(fa);
+		fb = FFT::transform(fb);
 
 		for (int i = 0; i < n; i++)
+		{
 			fa[i] *= fb[i];
+		}
 
-		fa = FFT::RFFT_(fa);
+		fa = FFT::reverseTransform(fa);
 
 		std::vector<type> res (n);
 		for (int i = 0; i < n; i++)
+		{
+			double temp = fa[i].real();
 			res[i] = type(fa[i].real() + 0.5);
+		}
 		
 		int carry = 0;
-		for (int i = 0; i < n; i++) {
+		for (int i = 0; i < n; i++) 
+		{
 			res[i] += carry;
 			carry = res[i] / base;
 			res[i] %= base;
 		}
 
 		while ((type)res[res.size() - 1] == 0)
+		{
 			res.erase(res.end() - 1);
+		}
 
 		BigInteger result;
 		result.arr = res;
@@ -879,7 +886,8 @@ namespace leart
 	{
 		BigInteger result = first_number;
 		int carry = 0;
-		for (int i = 0; i < result.size() || carry; i++) {
+		for (int i = 0; i < result.size() || carry; i++) 
+		{
 			if (i == result.size())
 				result.arr.push_back(0);
 			long long cur = carry + result[i] * 1ll * second_number;
@@ -887,7 +895,9 @@ namespace leart
 			carry = int(cur / base);
 		}
 		while (result.size() > 1 && result.arr.back() == 0)
+		{
 			result.arr.pop_back();
+		}
 		return result;
 	}
 
@@ -921,7 +931,7 @@ namespace leart
 		if (number[0] == 0 && number.size() == 1)
 		{
 			number[0] = 1;
-			number.sign = 0;
+			number._sign = BigInteger::Sign::minus;
 			return number;
 		}
 		int carry = 0;
@@ -954,8 +964,8 @@ namespace leart
 		{
 			number.arr.erase(number.arr.end() - 1);
 		}
-		if (number.arr[0] == 0 && number.sign == 0 && number.size() == 1)
-			number.sign = 1;
+		if (number.arr[0] == 0 && number._sign == BigInteger::Sign::minus && number.size() == 1)
+			number._sign = BigInteger::Sign::plus;
 		return number;
 	}
 	#pragma endregion

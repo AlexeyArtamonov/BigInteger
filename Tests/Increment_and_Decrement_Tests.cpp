@@ -1,18 +1,19 @@
 #include "../Headers/BigInteger.h"
 #include "CppUnitTest.h"
 
-using namespace Microsoft::VisualStudio::CppUnitTestFramework;
 namespace Microsoft {
 	namespace VisualStudio {
 		namespace CppUnitTestFramework
 		{
 			template<> inline std::wstring ToString<leart::BigInteger>(const leart::BigInteger& t)
 			{
-				return t.Get_Wstring_Representation();
+				return t.getWstring();
 			}
 		}
 	}
 }
+
+using namespace Microsoft::VisualStudio::CppUnitTestFramework;
 
 namespace Increment_and_Decrement_Tests
 {
